@@ -29,6 +29,8 @@ app.post('/checkemail', db.checkEmailAvailable)
 
 app.post('/adduser', db.addUser)
 
+app.post('/authentication', db.authenticate)
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

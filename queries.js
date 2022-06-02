@@ -19,7 +19,7 @@ const getUsers = (request, response) => {
   })
 }
 
-const checkEmailAvailable = (request, response) =>  {
+const checkEmailUserAvailable = (request, response) =>  {
   const email = request.body.email
   const username = request.body.username
 
@@ -48,9 +48,24 @@ const addUser = (request, response) =>  {
 
 }
 
+const authenticate = (request, response) =>  {
+  const email = request.body.email
+  const password = request.body.password
+
+  pool.query('SELECT * FROM account_info WHERE email = $1 AND password = $2', [email, password], (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    response.status(200).send("success")
+  })
+
+}
+
 module.exports = {
   getUsers,
-  checkEmailAvailable,
-  addUser
+  checkEmailUserAvailable,
+  addUser,
+  authenticate
   
 }
