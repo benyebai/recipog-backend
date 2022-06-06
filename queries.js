@@ -1,6 +1,6 @@
 const { response } = require('express')
-
 require('dotenv').config()
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: process.env.USER,
@@ -57,7 +57,7 @@ const authenticate = (request, response) =>  {
       throw error
     }
 
-    response.status(200).send("success")
+    response.status(200).send(results)
   })
 
 }
