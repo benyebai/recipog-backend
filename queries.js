@@ -10,6 +10,7 @@ const pool = new Pool({
   port: process.env.PORT,
 })
 
+// returns all users
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM account_info ORDER BY id ASC', (error, results) => {
     if (error) {
@@ -19,6 +20,7 @@ const getUsers = (request, response) => {
   })
 }
 
+// is that email or username still available
 const checkEmailUserAvailable = (request, response) =>  {
   const email = request.body.email
   const username = request.body.username
@@ -33,6 +35,7 @@ const checkEmailUserAvailable = (request, response) =>  {
 
 }
 
+// adds a user into the database based on the given info by the frontend
 const addUser = (request, response) =>  {
   const email = request.body.email
   const password = request.body.password
@@ -48,6 +51,7 @@ const addUser = (request, response) =>  {
 
 }
 
+// checks if your email and password match in the database
 const authenticate = (request, response) =>  {
   const email = request.body.email
   const password = request.body.password
