@@ -23,7 +23,7 @@ database.once('connected', () => {
 })
 
 // uses the routes file (base endpoint, contents of the route)
-app.use('api', routes);
+app.use('/api', routes);
 
 // used to bypass cors
 app.use((req, res, next) => {
