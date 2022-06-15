@@ -2,7 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const routes = require('./routes/routes');
 require('dotenv').config();
 const Trending = require('./models/model')
 
@@ -75,9 +74,11 @@ app.post('/api/storetrending', (req, res) => {
 
 })
 
-app.get('/api/gettrending', (req, res) => {
+app.get('/api/gettrending/:date', (req, res) => {
 
-
+  Trending.findOne({date : req.params.date}, function(errr, data){
+    res.send(data)
+  })
 })
 
 
