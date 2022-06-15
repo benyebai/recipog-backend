@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
 require('dotenv').config();
+const Trending = require('./models/model')
 
 const port = 3001
 
@@ -23,7 +24,7 @@ database.once('connected', () => {
 })
 
 // uses the routes file (base endpoint, contents of the route)
-app.use('/api', routes);
+
 
 // used to bypass cors
 app.use((req, res, next) => {
@@ -46,7 +47,7 @@ app.get('/', (request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-// postgres stuff
+// postgres requests
 const db = require('./queries')
 
 app.get('/users', db.getUsers)
@@ -56,6 +57,30 @@ app.post('/checkemail', db.checkEmailUserAvailable)
 app.post('/adduser', db.addUser)
 
 app.post('/authentication', db.authenticate)
+
+
+
+//mongo requests
+app.post('/api/storetrending', (req, res) => {
+
+  let date_ob = new Date();
+  let date = ("0" + date_ob.getDate()).slice(-2);
+  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+  let year = date_ob.getFullYear();
+  
+  currentMatch = new Trending({date : year + "-" + month + "-" + date, data : req.body.data});
+  currentMatch.save();
+  
+  console.log("success")
+
+})
+
+app.get('/api/gettrending', (req, res) => {
+
+
+})
+
+
 
 
 app.listen(port, () => {

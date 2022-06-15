@@ -1,11 +1,16 @@
-const { json } = require('express/lib/response');
+
 const mongoose = require('mongoose');
 
-const dataSchema = new mongoose.Schema({
+const Trending = new mongoose.Schema({
+    date: {
+        required: true,
+        type: String
+    },
+
     data: {
         required: true,
-        type: Object
+        type: Array
     }
 })
 
-module.exports = mongoose.model('recipe-data', dataSchema)
+module.exports = mongoose.model('trending', Trending)

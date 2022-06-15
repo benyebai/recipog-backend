@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const Model = require('../models/model')
+const Trending = require('../models/model')
 
 
 router.use((req, res, next) => {
@@ -10,19 +10,21 @@ router.use((req, res, next) => {
     next();
 });
 
-// list of trending breakfasts
-router.post('/trendingmorning', (req, res) => {
-    const data = new Model({
-        data: req.body.data
-    })
+// list of trending recipes
+router.post('/trending', (req, res) => {
 
-    try {
-        const dataToSave = data.save();
-        res.status(200).json(dataToSave)
-    }
-    catch (error) {
-        res.status(400).json({message: error.message})
-    }
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+
+    console.log(req)
+    
+    currentMatch = new Trending({date : year + "-" + month + "-" + date, data : req.params.data});
+    currentMatch.save();
+    
+    console.log("success")
+
 })
 
 
