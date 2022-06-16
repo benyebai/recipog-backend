@@ -3,7 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const Trending = require('./models/model')
+const {Trending, Recipe} = require('./models/model')
+
 
 const port = 3001
 
@@ -58,8 +59,7 @@ app.post('/adduser', db.addUser)
 app.post('/authentication', db.authenticate)
 
 
-
-//mongo requests
+//mongo requests, yes
 app.post('/api/storetrending', (req, res) => {
 
   let date_ob = new Date();
@@ -67,8 +67,8 @@ app.post('/api/storetrending', (req, res) => {
   let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
   let year = date_ob.getFullYear();
   
-  currentMatch = new Trending({date : year + "-" + month + "-" + date, data : req.body.data});
-  currentMatch.save();
+  currentTrend = new Trending({date : year + "-" + month + "-" + date, data : req.body.data});
+  currentTrend.save();
   
   console.log("success")
 
@@ -81,7 +81,21 @@ app.get('/api/gettrending/:date', (req, res) => {
   })
 })
 
+app.post('/api/storerecipe', (req, res) => {
 
+  recipe = new Recipe({id : req.body.id, data : req.body.data});
+  recipe.save();
+  
+  console.log("success1")
+
+})
+
+app.get('/api/getrecipe/:id', (req, res) => {
+
+  Recipe.findOne({id : req.params.id}, function(errr, data){
+    res.send(data)
+  })
+})
 
 
 app.listen(port, () => {

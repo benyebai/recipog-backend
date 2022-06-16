@@ -13,4 +13,19 @@ const Trending = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('trending', Trending)
+const Recipe = new mongoose.Schema({
+    id: {
+        required: true,
+        type: String
+    },
+
+    data: {
+        required: true,
+        type: Object
+    }
+})
+
+module.exports = {
+    Trending: mongoose.model('trending', Trending),
+    Recipe: mongoose.model('recipe', Recipe)
+}
